@@ -1,0 +1,100 @@
+/* Style for the cost circle */
+      .cost-circle {
+	position: absolute; /* Position the circle absolutely within the card */
+	top: 16px; /* Adjust the vertical position */
+	right: 16px; /* Adjust the horizontal position */
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 50%;
+	font-weight: bold;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	border: 2px solid #333; /* Add a solid, harder border */
+      }
+      
+      /* Ensure the card header has relative positioning to contain the circle */
+      mat-card-header {
+	position: relative;
+      }
+
+      .gang-image {
+	max-width: 100%; /* Ensure the image fits within the container */
+	height: auto; /* Maintain aspect ratio */
+	display: block; /* Make the image a block element */
+	margin: 16px auto 0; /* Add padding above the image */
+      }
+
+      .ganger-image {
+	display: block; /* Ensures the image is treated as a block element */
+	margin: 16px auto 0; /* Centers the image horizontally and adds spacing above */
+	max-width: 100%; /* Ensures the image fits within the container */
+	height: auto; /* Maintains the aspect ratio */
+      }
+
+      .gang-members {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+	gap: 16px; /* Space between cards */
+	margin-top: 16px; /* Add some spacing above the cards */
+      }
+      
+      .ganger-card {
+	width: 100%; /* Ensure cards take up full width of their grid cell */
+      }
+
+      .card-title {
+	display: flex;
+	justify-content: space-between; /* Pushes the toggle to the far right */
+	align-items: center; /* Aligns items vertically */
+      }
+      
+      .toggle-container {
+	margin-left: auto; /* Ensures the toggle stays on the far right */
+      }
+
+/* General table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+  text-align: left; /* Left-align all table text */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left; /* Left-align individual cells */
+}
+
+th {
+  font-weight: bold;
+}
+
+td {
+  vertical-align: middle;
+}
+
+/* Specific styles for the statline table */
+.statline-table th {
+}
+
+.statline-table td {
+}
+
+/* Specific styles for the weapon profiles table */
+.weapon-profiles-table th {
+}
+
+.weapon-profiles-table td {
+}
+
+/* Specific styles for the rule table */
+
+/* Specific styles for the rule table */
+.rule-table th:first-child,
+.rule-table td:first-child {
+  width: 30%; /* Fixed percentage width for the Name column */
+}

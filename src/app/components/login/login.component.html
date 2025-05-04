@@ -1,0 +1,29 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Welcome! Please log in to continue.</p>
+      <form>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="Enter your email" disabled />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Enter your password" disabled />
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" disabled>
+        Login with Email
+      </button>
+      <button mat-raised-button color="primary" (click)="loginWithGoogle()">
+        <mat-icon>login</mat-icon>
+        Login with Google
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

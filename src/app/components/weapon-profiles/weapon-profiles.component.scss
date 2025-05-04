@@ -1,0 +1,101 @@
+
+.mat-column-name {
+	width: 10%;
+	// max-width: 50px !important;
+}
+.mat-column-traits {
+}
+.mat-column-actions {
+	min-width: 50px !important;
+}
+
+.mat-column-range_short,
+.mat-column-range_long,
+.mat-column-accuracy_short,
+.mat-column-accuracy_long,
+.mat-column-strength,
+.mat-column-damage,
+.mat-column-armor_penetration
+{
+	max-width: 35px !important;
+}
+
+.mat-column-ammo_roll
+{
+	max-width: 50px !important;
+}
+
+/* filepath: c:\Users\gom\code\angular\gommunda-frontend\src\app\components\rules-editor\rules-editor.component.scss */
+mat-form-field {
+	width: 100%; /* Ensure full width */
+	margin: 0; /* Remove extra spacing */
+	font-size: 13px; /* Ensure consistent font size */
+	min-width: 0; /* Remove the default minimum width */
+	max-height: 75px;
+
+}
+
+/* Adjust font size for mat-select */
+mat-select {
+	font-size: 13px; /* Match the font size of mat-input */
+}
+
+mat-option {
+	font-size: 13px; /* Match the font size of mat-input */
+}
+
+/* Optional: Adjust the padding inside mat-select */
+.mat-select-trigger {
+	padding: 0.5rem; /* Adjust padding to align with mat-input */
+}
+
+mat-form-field .mat-form-field-wrapper {
+	padding-bottom: 0; /* Remove extra padding inside the form field */
+}
+
+mat-form-field .mat-input-element {
+	height: 13px; /* Adjust input height */
+	line-height: 1; /* Adjust line height for better alignment */
+}
+
+.mat-input-element {
+	min-width: 0; /* Remove the minimum width for the input element */
+}
+
+mat-table {
+	border-spacing: 0; /* Removes spacing between table cells */
+}
+
+mat-header-cell,
+mat-cell {
+	line-height: 40px; /* Align content vertically within the row */
+	padding: 3; /* Remove padding */
+	text-align: left; /* Align text to the left */
+}
+
+mat-row,
+mat-header-row {
+	height: 40px; /* Set a smaller height for rows */
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+	padding: 0 2px;
+}
+
+// .mdc-text-field {
+// 	padding-left: 0px;
+// 	padding-right: 0px;
+// }
+
+// .mat-mdc-form-field-infix {
+// 	padding-left: 0px;
+// 	padding-right: 0px;
+// 	padding-top: 0px;
+// 	padding-bottom: 0px;
+// 	flex: auto;
+// 	min-width: 0; /* Remove the minimum width for the input container */
+// 	width: auto; /* Allow the width to adjust based on the content */
+// 	position: relative;
+// 	box-sizing: border-box;
+// }

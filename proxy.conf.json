@@ -1,0 +1,10 @@
+{
+  "/yaktribe-api": {
+    "target": "https://yaktribe.games",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/yaktribe-api": ""
+    }
+  }
+}

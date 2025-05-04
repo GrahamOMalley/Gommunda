@@ -1,0 +1,48 @@
+.ganger-special-rules-editor {
+	width: 100%;
+	margin: 0px;
+
+	.mat-form-field {
+		width: 100%;
+	}
+
+}
+
+.mat-column-ganger_type {
+	text-align: left;
+	padding: 0px;
+}
+
+.mat-column-rules {
+	width: 50% !important;
+	text-align: left;
+	padding: 0px;
+}
+
+.mat-column-actions {
+	text-align: center;
+	padding: 0px;
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+	padding: 0px 2px 0px 0px;
+}
+
+
+mat-form-field {
+	display: flex; /* Ensure the form field aligns its content properly */
+	align-items: center; /* Vertically center the content */
+	width: 100%; /* Ensure full width */
+	font-size: 13px; /* Ensure consistent font size */
+	min-width: 0; /* Remove the default minimum width */
+	max-height: 75px;
+	min-height: 75px;
+	vertical-align: middle; /* Align text vertically in the middle */
+	padding: 0px;
+      }
+
+mat-form-field > input {
+	padding-top: 8px;
+}      
+      

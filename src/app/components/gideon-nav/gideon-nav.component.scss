@@ -1,0 +1,38 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.router-outlet-container {
+  padding: 16px; /* Adjust the padding value as needed */
+  box-sizing: border-box; /* Ensure padding doesn't affect the width */
+}

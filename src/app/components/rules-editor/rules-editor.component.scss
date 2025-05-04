@@ -1,0 +1,110 @@
+/* filepath: c:\Users\gom\code\angular\gommunda-frontend\src\app\components\rules-editor\rules-editor.component.scss */
+mat-form-field {
+	width: 100%;
+	/* Ensure full width */
+	margin: 0;
+	/* Remove extra spacing */
+	font-size: 13px;
+	/* Ensure consistent font size */
+}
+
+/* Adjust font size for mat-select */
+mat-select {
+	font-size: 13px;
+	/* Match the font size of mat-input */
+}
+
+mat-option {
+	font-size: 13px;
+	/* Match the font size of mat-input */
+}
+
+/* Optional: Adjust the padding inside mat-select */
+.mat-select-trigger {
+	padding: 0.5rem;
+	/* Adjust padding to align with mat-input */
+}
+
+mat-form-field .mat-form-field-wrapper {
+	padding-bottom: 0;
+	/* Remove extra padding inside the form field */
+}
+
+mat-form-field .mat-input-element {
+	height: 16px;
+	/* Adjust input height */
+	line-height: 1;
+	/* Adjust line height for better alignment */
+}
+
+mat-table {
+	border-spacing: 0;
+	/* Removes spacing between table cells */
+}
+
+mat-header-cell,
+mat-cell {
+	line-height: 40px;
+	/* Align content vertically within the row */
+	padding: 0;
+	/* Remove extra padding */
+}
+
+mat-row,
+mat-header-row {
+	height: 40px;
+	/* Set a smaller height for rows */
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+	padding: 0 0px;
+}
+
+.mdc-text-field {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.mat-mdc-form-field-infix {
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	flex: auto;
+	min-width: 0;
+	width: 180px;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.mat-column-select {
+	overflow: initial;
+}
+
+/* Set specific widths for each column */
+// .mat-column-name { width: 20%; }
+
+.mat-column-rule_type {
+	width: 10%;
+	/* Rule Type column width */
+}
+
+.mat-column-description {
+	width: 50%;
+	/* Description column width */
+}
+
+.mat-column-actions {
+	width: 11%;
+	/* Actions column width */
+}
+
+/* Optional: Ensure no extra padding or spacing */
+mat-header-cell,
+mat-cell {
+	padding: 0;
+	/* Remove padding */
+	text-align: left;
+	/* Align text to the left */
+}

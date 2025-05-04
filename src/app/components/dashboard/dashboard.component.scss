@@ -1,0 +1,22 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.import-section,
+.imported-gang,
+.import-error {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

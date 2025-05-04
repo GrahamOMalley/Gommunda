@@ -1,0 +1,55 @@
+<div class="ganger-special-rules-editor">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+    <!-- Ganger Type Column -->
+    <ng-container matColumnDef="ganger_type">
+      <th mat-header-cell *matHeaderCellDef>Ganger Type</th>
+      <td mat-cell *matCellDef="let rule">
+        <mat-form-field appearance="fill" subscriptSizing="dynamic">
+          <input matInput [(ngModel)]="rule.ganger_type" placeholder="Ganger Type" />
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!-- Rules Column -->
+    <ng-container matColumnDef="rules">
+      <th mat-header-cell *matHeaderCellDef>Special Rules</th>
+      <td mat-cell *matCellDef="let rule">
+        <mat-form-field appearance="fill" class="rules-input" subscriptSizing="dynamic">
+          <mat-chip-grid #chipGrid aria-label="Special rules" [(ngModel)]="rule.rules">
+            <mat-chip-row
+              *ngFor="let skill of rule.rules; let i = index"
+              (removed)="removeRule(rule, i)"
+            >
+              {{ skill }}
+              <button matChipRemove [attr.aria-label]="'Remove rule ' + skill">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input
+              matInput
+              placeholder="Add rule"
+              [matChipInputFor]="chipGrid"
+              (matChipInputTokenEnd)="addRule(rule, $event)"
+            />
+          </mat-chip-grid>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        <button mat-fab color="primary" class="add-button" (click)="addNewRule()" aria-label="Add New Rule">
+          <mat-icon>add</mat-icon>
+        </button>
+      </th>
+      <td mat-cell *matCellDef="let rule">
+        <button mat-button color="primary" (click)="saveRule(rule)">Save</button>
+        <button mat-button color="warn" (click)="deleteRule(rule)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

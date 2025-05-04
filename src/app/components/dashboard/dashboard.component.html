@@ -1,0 +1,35 @@
+<div class="dashboard">
+
+  <!-- Import Gang from YakTribe -->
+  <mat-card class="import-section">
+    <mat-card-title>Import Gang from YakTribe</mat-card-title>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Enter Gang ID</mat-label>
+        <input matInput #gangIdInput type="text" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="importFromYakTribe(gangIdInput.value)">
+        Import Gang
+      </button>
+      <p *ngIf="importError" class="error">{{ importError }}</p>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+<div>
+  DEBUG IDS:
+  <pre>
+    461308
+  </pre>
+  <pre>
+590259
+  </pre>
+  <pre>
+603081
+  </pre>
+  <pre>
+603314
+  </pre>
+
+</div>
