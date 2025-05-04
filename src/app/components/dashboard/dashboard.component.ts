@@ -23,7 +23,7 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
 })
 export class DashboardComponent implements OnInit {
-  createdGang: Gang | null = null;
+  generatedLink: string | null = null;
   importedGang: Gang | null = null;
   importError: string | null = null;
 
@@ -41,25 +41,27 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  importFromYakTribe(gang_id: string): void {
-    this.dataImportService.importFromYakTribe(gang_id).subscribe({
-      next: (importedGang) => {
-        if (!importedGang) {
-          this.importError = 'Failed to import gang. No data found.';
-          return;
-        }
-
-        this.importedGang = importedGang;
-        this.importError = null;
-
-        console.log('Imported gang:', importedGang);
-        this.router.navigate(['/gang', importedGang.gang_id]);
-      },
-      error: (err) => {
-        console.error('Error importing gang:', err);
-        this.importedGang = null;
-        this.importError = 'Failed to import gang. YakTribe may have blocked the request.';
-      },
-    });
+  generateYakTribeLink(gangId: string): void {
+    if (!gangId) {
+      this.generatedLink = null;
+      return;
+    }
+    this.generatedLink = `https://yaktribe.games/underhive/json/gang/${gangId}.json`;
   }
+
+  importFromJson(jsonString: string): void {
+    try {
+      const importedGang = this.dataImportService.importFromJson(jsonString);
+      this.importedGang = importedGang;
+      this.importError = null;
+
+      console.log('Imported gang:', importedGang);
+      this.router.navigate(['/gang', importedGang.gang_id]);
+    } catch (err) {
+      console.error('Error importing gang:', err);
+      this.importedGang = null;
+      this.importError = 'Failed to import gang. Invalid JSON format.';
+    }
+  }
+
 }

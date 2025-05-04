@@ -1,7 +1,8 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  gap: 16px; /* Add spacing between cards */
   padding: 16px;
 }
 
@@ -19,4 +20,14 @@
 .error {
   color: red;
   font-weight: bold;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 600px; /* Set a consistent max width for all cards */
+}
+
+mat-card-title {
+  margin: 16px; /* Adds space below the title */
+  display: block; /* Ensures the margin applies properly */
 }

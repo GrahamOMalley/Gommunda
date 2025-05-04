@@ -20,18 +20,65 @@ export class DataImportService {
     private gangerSpecialRulesService: GangerSpecialRulesService // Add the appropriate type for this service
   ) {}
 
-  importFromYakTribe(gang_id: string): Observable<Gang | null> {
-    const url = `/yaktribe-api/underhive/json/gang/${gang_id}.json`;
 
-    return this.http.get(url, { responseType: 'text' }).pipe(
-      map((response) => this.parseGangResponse(response)),
-      switchMap((importedGang) => this.processGangData(importedGang)),
-      switchMap((importedGang) => this.saveGang(importedGang)),
-      catchError((err) => {
-        console.error('Error importing gang:', err);
-        return of(null); // Return null in case of an error
-      })
-    );
+  importFromJson(jsonString: string): Gang {
+    try {
+      const parsedResponse = JSON.parse(jsonString);
+
+      if (!parsedResponse.gang) {
+        console.warn('No gang data found:', parsedResponse.message || 'Unknown error');
+        throw new Error(parsedResponse.message || 'No gang data found in the provided JSON.');
+      }
+
+      const data = parsedResponse.gang;
+
+      // Map the YakTribe data to your Gang interface
+      const importedGang: Gang = {
+        gang_id: data.gang_id,
+        gang_name: data.gang_name,
+        gang_type: data.gang_type,
+        gang_rating: data.gang_rating,
+        credits: data.credits,
+        reputation: data.reputation,
+        wealth: data.wealth,
+        alignment: data.alignment,
+        allegiance: data.allegiance,
+        gang_notes: data.gang_notes,
+        gangers: data.gangers.map((ganger: any) => ({
+          ganger_id: ganger.ganger_id,
+          name: ganger.name,
+          type: ganger.type,
+          cost: ganger.cost,
+          equipment: ganger.equipment,
+          skills: ganger.skills,
+          injuries: ganger.injuries,
+          image: ganger.image,
+          status: ganger.status,
+          notes: ganger.notes,
+          m: ganger.m,
+          ws: ganger.ws,
+          bs: ganger.bs,
+          s: ganger.s,
+          t: ganger.t,
+          w: ganger.w,
+          i: ganger.i,
+          a: ganger.a,
+          ld: ganger.ld,
+          cl: ganger.cl,
+          wil: ganger.wil,
+          int: ganger.int,
+          xp: ganger.xp,
+          specialRules: [],
+        })),
+        gang_image: data.gang_image,
+      };
+
+      console.log('Mapped imported gang:', importedGang);
+      return importedGang;
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
+      throw new Error('Invalid JSON format or no gang data found.');
+    }
   }
 
   private parseGangResponse(response: string): Gang {

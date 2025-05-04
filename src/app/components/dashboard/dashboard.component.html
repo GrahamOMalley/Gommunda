@@ -1,35 +1,37 @@
 <div class="dashboard">
 
-  <!-- Import Gang from YakTribe -->
-  <mat-card class="import-section">
-    <mat-card-title>Import Gang from YakTribe</mat-card-title>
+  <!-- Generate YakTribe Link -->
+  <mat-card class="generate-link-section">
+    <mat-card-title>Generate YakTribe Link</mat-card-title>
     <mat-card-content>
+      <p>Enter the Gang ID below to generate a link to the YakTribe page where you can manually copy the JSON data for your gang.</p>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Enter Gang ID</mat-label>
         <input matInput #gangIdInput type="text" />
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="importFromYakTribe(gangIdInput.value)">
+      <button mat-raised-button color="primary" (click)="generateYakTribeLink(gangIdInput.value)">
+        Generate Link
+      </button>
+      <p *ngIf="generatedLink">
+        <a [href]="generatedLink" target="_blank">{{ generatedLink }}</a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Import Gang from JSON -->
+  <mat-card class="import-section">
+    <mat-card-title>Import Gang from JSON</mat-card-title>
+    <mat-card-content>
+      <p>Paste the JSON data you copied from the YakTribe page into the text area below, then click "Import Gang" to load the data into the application.</p>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Paste JSON Data</mat-label>
+        <textarea matInput #jsonInput rows="10"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="importFromJson(jsonInput.value)">
         Import Gang
       </button>
       <p *ngIf="importError" class="error">{{ importError }}</p>
     </mat-card-content>
   </mat-card>
-
-</div>
-
-<div>
-  DEBUG IDS:
-  <pre>
-    461308
-  </pre>
-  <pre>
-590259
-  </pre>
-  <pre>
-603081
-  </pre>
-  <pre>
-603314
-  </pre>
 
 </div>
