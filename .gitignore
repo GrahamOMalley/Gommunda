@@ -1,3 +1,6 @@
+# .angular so we don't include the huge cache dir from pushed code
+.angular/
+
 # Logs
 logs
 *.log
