@@ -1,8 +1,29 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [mode]="'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+<mat-toolbar color="primary" class="example-header">
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="sidenav.toggle()">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+
+  <span>Gommunda - beta build</span>
+
+  <span class="spacer"></span>
+
+  <div *ngIf="(user$ | async) as user" class="user-info">
+    <span>{{ user.displayName }}</span>
+    <img [src]="user.photoURL" alt="User Photo" class="user-photo" />
+    <button mat-button color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+
+  <mat-sidenav #sidenav mode="side" opened class="example-sidenav">
     <mat-nav-list *ngIf="(user$ | async) as user">
       <a mat-list-item routerLink="/dashboard">Dashboard</a>
       <a mat-list-item routerLink="/rules">Rules Editor</a>
@@ -11,8 +32,6 @@
       <div class="spacer"></div>
       <mat-divider></mat-divider>
       <div class="spacer"></div>
-
-      <!-- List of Gangs -->
       <a mat-list-item *ngFor="let gang of (gangs$ | async)" routerLink="/gang/{{ gang.gang_id }}">
         {{ gang.gang_name }}
       </a>
@@ -20,28 +39,13 @@
         <p>No gangs available</p>
       </ng-template>
     </mat-nav-list>
+
   </mat-sidenav>
+
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        *ngIf="isHandset$ | async"
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Gommunda - beta build</span>
-      <span class="spacer"></span>
-      <div *ngIf="(user$ | async) as user" class="user-info">
-        <span>{{ user.displayName }}</span>
-        <img [src]="user.photoURL" alt="User Photo" class="user-photo" />
-        <button mat-button color="warn" (click)="logout()">Logout</button>
-      </div>
-    </mat-toolbar>
-    <!-- Add a container around the router-outlet -->
     <div class="router-outlet-container">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
+
 </mat-sidenav-container>

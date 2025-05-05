@@ -4,6 +4,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable, of } from 'rxjs';
@@ -17,8 +18,10 @@ import { Gang, GangService } from '../../services/gang.service';
   selector: 'app-gideon-nav',
   templateUrl: './gideon-nav.component.html',
   styleUrl: './gideon-nav.component.scss',
+  standalone: true,
   imports: [
     MatToolbarModule,
+    MatTooltipModule,
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
