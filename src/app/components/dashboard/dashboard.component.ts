@@ -51,16 +51,24 @@ export class DashboardComponent implements OnInit {
 
   importFromJson(jsonString: string): void {
     try {
-      const importedGang = this.dataImportService.importFromJson(jsonString);
-      this.importedGang = importedGang;
-      this.importError = null;
+      this.dataImportService.importFromJson(jsonString).subscribe({
+        next: (importedGang: Gang) => {
+          this.importedGang = importedGang;
+          this.importError = null;
 
-      console.log('Imported gang:', importedGang);
-      this.router.navigate(['/gang', importedGang.gang_id]);
+          console.log('Imported gang:', importedGang);
+          this.router.navigate(['/gang', importedGang.gang_id]);
+        },
+        error: (err) => {
+          console.error('Error importing gang:', err);
+          this.importedGang = null;
+          this.importError = 'Failed to import gang. Invalid JSON format.';
+        },
+      });
     } catch (err) {
-      console.error('Error importing gang:', err);
+      console.error('Unexpected error:', err);
       this.importedGang = null;
-      this.importError = 'Failed to import gang. Invalid JSON format.';
+      this.importError = 'An unexpected error occurred.';
     }
   }
 

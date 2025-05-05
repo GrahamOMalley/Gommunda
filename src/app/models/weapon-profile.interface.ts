@@ -13,5 +13,14 @@ export interface WeaponProfile {
 	armor_penetration: string;
 	ammo_roll: string;
 	traits: string[];
-      }
-      
+}
+
+export class Weapon {
+  name: string;
+  profiles: WeaponProfile[];
+
+  constructor(name: string, profiles: WeaponProfile[]) {
+    this.name = name;
+    this.profiles = profiles;
+  }
+}

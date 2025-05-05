@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInput, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { WeaponProfile } from '../../models/weapon-profile.interface';
+import { MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Weapon, WeaponProfile } from '../../models/weapon-profile.interface';
 import { WeaponsService } from '../../services/weapons.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -27,9 +29,11 @@ import { switchMap, take } from 'rxjs/operators';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatButtonToggleGroup,
     MatOptionModule,
     MatSelectModule,
-    MatChipsModule,
+    MatChipsModule,    
     MatChipInput
   ],
   templateUrl: './weapon-profiles.component.html',
@@ -37,20 +41,21 @@ import { switchMap, take } from 'rxjs/operators';
 })
 export class WeaponProfilesComponent implements OnInit {
 
-  displayedColumns: string[] = [
-    'name',
-    'range_short',
-    'range_long',
-    'accuracy_short',
-    'accuracy_long',
-    'strength',
-    'armor_penetration',
-    'damage',
-    'ammo_roll',
-    'traits',
-    'actions'
-  ];
-  dataSource = new MatTableDataSource<WeaponProfile>([]);
+    displayedColumns: string[] = [
+      'weaponName',
+      'profileName',
+      'range_short',
+      'range_long',
+      'accuracy_short',
+      'accuracy_long',
+      'strength',
+      'armor_penetration',
+      'damage',
+      'ammo_roll',
+      'traits',
+      'actions'
+    ];
+  dataSource = new MatTableDataSource<Weapon>([]);
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA]; // Keys to separate chips
 
@@ -61,7 +66,7 @@ export class WeaponProfilesComponent implements OnInit {
   }
 
   loadWeapons(): void {
-    this.weaponsService.getAllWeapons().subscribe((weapons: WeaponProfile[]) => {
+    this.weaponsService.getAllWeapons().subscribe((weapons: Weapon[]) => {
       this.dataSource.data = weapons;
       console.log('Loaded weapons:', weapons);
     });
@@ -85,11 +90,11 @@ export class WeaponProfilesComponent implements OnInit {
     }
   }
 
-  saveWeapon(weapon: WeaponProfile): void {
+  saveWeapon(weapon: Weapon): void {
     console.log('Saving weapon:', weapon);
 
     // Get the set of traits from the weapon
-    const traits = new Set(weapon.traits);
+    const traits = new Set(weapon.profiles.flatMap(profile => profile.traits));
     console.log('Traits to check:', traits);
 
     // Check for missing rules in the RulesService
@@ -132,20 +137,25 @@ export class WeaponProfilesComponent implements OnInit {
   }
 
   addNewWeapon(): void {
-    const newWeapon: WeaponProfile = {
+    const newWeapon: Weapon = {
       name: '',
-      range: { short: '0', long: '0' },
-      accuracy: { short: '', long: '' },
-      strength: '0',
-      damage: '0',
-      armor_penetration: '',
-      ammo_roll: '',
-      traits: []
+      profiles: [
+        {
+          name: '',
+          range: { short: '', long: '' },
+          accuracy: { short: '', long: '' },
+          strength: '',
+          damage: '',
+          armor_penetration: '',
+          ammo_roll: '',
+          traits: []
+        }
+      ] // Initialize with an empty profile
     };
     this.dataSource.data = [...this.dataSource.data, newWeapon];
   }
 
-  deleteWeapon(weapon: WeaponProfile): void {
+  deleteWeapon(weapon: Weapon): void {
     this.dataSource.data = this.dataSource.data.filter(w => w !== weapon);
 
     this.weaponsService.deleteWeapon(weapon.name).then(() => {
@@ -155,5 +165,30 @@ export class WeaponProfilesComponent implements OnInit {
     });
 
     console.log('Deleted weapon:', weapon);
+  }
+
+  addProfileToWeapon(weapon: Weapon): void {
+    const newProfile: WeaponProfile = {
+      name: '',
+      range: { short: '', long: '' },
+      accuracy: { short: '', long: '' },
+      strength: '',
+      damage: '',
+      armor_penetration: '',
+      ammo_roll: '',
+      traits: []
+    };
+
+    weapon.profiles.push(newProfile);
+    console.log('Added new profile to weapon:', weapon);
+  }
+
+  removeLastProfileFromWeapon(weapon: Weapon): void {
+    if (weapon.profiles.length > 0) {
+      const removedProfile = weapon.profiles.pop();
+      console.log('Removed profile:', removedProfile, 'from weapon:', weapon);
+    } else {
+      console.warn('No profiles to remove from weapon:', weapon);
+    }
   }
 }

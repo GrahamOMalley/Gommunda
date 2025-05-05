@@ -65,10 +65,11 @@
 
         <p><strong>Equipment:</strong> {{ getEquipmentList(ganger) }}</p>
         <!-- Weapon Profiles Table -->
-        <table class="weapon-profiles-table" *ngIf="gangWeapons$ | async as gangWeapons">
+        <table class="weapon-profiles-table small-text" *ngIf="gangWeapons$ | async as gangWeapons">
           <thead>
             <tr>
               <th>Weapon</th>
+              <th>Profile</th>
               <th>Range (S/L)</th>
               <th>Acc (S/L)</th>
               <th>Str</th>
@@ -79,18 +80,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let equipment of ganger.equipment">
-              <ng-container *ngIf="getWeaponProfile(equipment.name, gangWeapons) as profile">
-                <td>{{ profile.name }}</td>
-                <td>{{ profile.range.short }}/{{ profile.range.long }}</td>
-                <td>{{ profile.accuracy.short }}/{{ profile.accuracy.long }}</td>
-                <td>{{ profile.strength }}</td>
-                <td>{{ profile.damage }}</td>
-                <td>{{ profile.armor_penetration }}</td>
-                <td>{{ profile.ammo_roll }}</td>
-                <td>{{ profile.traits.join(', ') }}</td>
+            <ng-container *ngFor="let equipment of ganger.equipment">
+              <ng-container *ngIf="getWeapon(equipment.name, gangWeapons) as weapon">
+                <tr *ngFor="let profile of weapon.profiles">
+                  <td>{{ weapon.name }}</td>
+                  <td>{{ profile.name }}</td>
+                  <td>{{ profile.range.short }}/{{ profile.range.long }}</td>
+                  <td>{{ profile.accuracy.short }}/{{ profile.accuracy.long }}</td>
+                  <td>{{ profile.strength }}</td>
+                  <td>{{ profile.damage }}</td>
+                  <td>{{ profile.armor_penetration }}</td>
+                  <td>{{ profile.ammo_roll }}</td>
+                  <td>{{ profile.traits.join(', ') }}</td>
+                </tr>
               </ng-container>
-            </tr>
+            </ng-container>
           </tbody>
         </table>
 

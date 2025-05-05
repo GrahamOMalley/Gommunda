@@ -7,6 +7,7 @@ import { RulesService } from './rules.service';
 import { Rule } from '../models/rules.interface';
 import { WeaponsService } from './weapons.service';
 import { GangerSpecialRulesService } from './ganger-special-rules.service';
+import { Weapon } from '../models/weapon-profile.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,7 @@ export class DataImportService {
     private gangerSpecialRulesService: GangerSpecialRulesService // Add the appropriate type for this service
   ) {}
 
-
-  importFromJson(jsonString: string): Gang {
+  importFromJson(jsonString: string): Observable<Gang> {
     try {
       const parsedResponse = JSON.parse(jsonString);
 
@@ -74,7 +74,9 @@ export class DataImportService {
       };
 
       console.log('Mapped imported gang:', importedGang);
-      return importedGang;
+
+      // Process the gang data
+      return this.processGangData(importedGang);
     } catch (e) {
       console.error('Error parsing JSON:', e);
       throw new Error('Invalid JSON format or no gang data found.');
@@ -299,13 +301,18 @@ export class DataImportService {
           from(
             this.weaponsService.saveWeapon(this.sanitizeName(weapon), {
               name: this.sanitizeName(weapon),
-              range: { short: '', long: '' },
-              accuracy: { short: '', long: '' },
-              strength: '',
-              damage: '',
-              armor_penetration: '',
-              ammo_roll: '',
-              traits: [],
+              profiles: [
+                {
+                  name: this.sanitizeName(weapon),
+                  range: { short: '', long: '' },
+                  accuracy: { short: '', long: '' },
+                  strength: '',
+                  damage: '',
+                  armor_penetration: '',
+                  ammo_roll: '',
+                  traits: [],
+                },
+              ],
             })
           )
         );

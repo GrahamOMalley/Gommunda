@@ -1,6 +1,8 @@
 
-.mat-column-name {
-	width: 10%;
+.mat-column-weaponName,
+.mat-column-profileName
+{
+	max-width: 150px;
 	// max-width: 50px !important;
 }
 
@@ -16,13 +18,14 @@
 .mat-column-ammo_roll,
 .mat-column-armor_penetration
 {
-	max-width: 32px !important;
+	max-width: 50px !important;
+	min-width: 50px !important;
 }
 
 /* Below is universal mat-table css for tables with editable data*/
 
 .mat-column-actions {
-	width: 130px;
+	width: 260px;
 	text-align: right;
 }
 

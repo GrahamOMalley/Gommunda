@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WeaponProfile } from '../../models/weapon-profile.interface';
+import { Weapon } from '../../models/weapon-profile.interface';
 import { Rule } from '../../models/rules.interface';
 import { MatTableModule } from '@angular/material/table';
 
@@ -36,7 +36,7 @@ import { MatTableModule } from '@angular/material/table';
 export class GangDetailsComponent implements OnInit, OnDestroy {
   private routeSub: Subscription | null = null;
   gang$: Observable<Gang | null> = of(null);
-  gangWeapons$: Observable<WeaponProfile[]> = of([]);
+  gangWeapons$: Observable<Weapon[]> = of([]);
   rules$: Observable<Rule[]> = of([]); // New Observable for matched rules
   showGangerImages = false; // Default value for showing ganger images
   ruleTypeOrder: string[] = ['gang_skill', 'ganger_special_rule', 'weapon_trait', 'equipment']; // Order of rule types
@@ -63,7 +63,7 @@ export class GangDetailsComponent implements OnInit, OnDestroy {
     ).subscribe(gang => {
       if (gang) {
         this.gang$ = of(gang);
-        this.loadWeaponProfiles(gang);
+        this.loadWeapons(gang);
         this.loadSpecialRules(gang);
         this.loadRules(gang); // Renamed method
       }
@@ -81,9 +81,9 @@ export class GangDetailsComponent implements OnInit, OnDestroy {
     return ganger.equipment.map((item: any) => item.name).join(', ');
   }
 
-  getWeaponProfile(weaponName: string, gangWeapons: WeaponProfile[]): WeaponProfile | null {
+  getWeapon(weaponName: string, gangWeapons: Weapon[]): Weapon | null {
 
-    //remove any weaponprofile that doesn't have a name property
+    //remove any Weapon that doesn't have a name property
     gangWeapons = gangWeapons.filter(w => w?.name);
 
     if (!weaponName || !gangWeapons) {
@@ -104,7 +104,7 @@ export class GangDetailsComponent implements OnInit, OnDestroy {
     return of(null); // Return null if no gang_id is present
   }
 
-  private loadWeaponProfiles(gang: Gang): void {
+  private loadWeapons(gang: Gang): void {
     const uniqueWeapons = new Set<string>();
     gang.gangers.forEach(member => {
       if (member.equipment) {
@@ -127,23 +127,25 @@ export class GangDetailsComponent implements OnInit, OnDestroy {
 
   private loadRules(gang: Gang): void {
     this.rules$ = this.rulesService.getAllRules().pipe(
-      switchMap(allRules => 
+      switchMap(allRules =>
         this.gangWeapons$.pipe(
           map(gangWeapons => {
             // Step 1: Traverse the gang structure to collect all relevant names
             const ruleNames = new Set<string>();
 
-            // Add ganger skills
-            gang.gangers.forEach(ganger => {
-              ganger.skills.forEach(skill => ruleNames.add(skill));
-              ganger.specialRules.forEach(specialRule => ruleNames.add(specialRule));
-              ganger.equipment.forEach(equipment => ruleNames.add(equipment.name));
+            // Add ganger skills, special rules, and equipment names
+            gang.gangers?.forEach(ganger => {
+              ganger.skills?.forEach(skill => ruleNames.add(skill));
+              ganger.specialRules?.forEach(specialRule => ruleNames.add(specialRule));
+              ganger.equipment?.forEach(equipment => ruleNames.add(equipment.name));
             });
 
             // Step 2: Add unique weapon traits from gangWeapons
-            gangWeapons.forEach(weapon => {
-              if (weapon.traits) {
-                weapon.traits.forEach(trait => ruleNames.add(trait));
+            gangWeapons?.forEach(weapon => {
+              if (weapon) {
+                weapon.profiles?.forEach(profile => {
+                  profile.traits?.forEach(trait => ruleNames.add(trait));
+                });
               }
             });
 

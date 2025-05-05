@@ -91,7 +91,15 @@ td {
 .weapon-profiles-table td {
 }
 
-/* Specific styles for the rule table */
+.weapon-profiles-table.small-text {
+  font-size: 14px; /* Adjust the font size as needed */
+}
+
+.weapon-profiles-table.small-text th,
+.weapon-profiles-table.small-text td {
+  padding: 3px; /* Reduce padding for a more compact look */
+//   margin: 0%;
+}
 
 /* Specific styles for the rule table */
 .rule-table th:first-child,

@@ -14,7 +14,7 @@ import {
 import { Auth } from '@angular/fire/auth';
 import { Observable, of, forkJoin, combineLatest } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { WeaponProfile } from '../models/weapon-profile.interface';
+import { Weapon } from '../models/weapon-profile.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,36 +28,36 @@ export class WeaponsService {
     return name.replace(/[\/.#$[\]]/g, '_');
   }
 
-  // Get the user's weapons collection reference
-  private getUserWeaponsCollection(): CollectionReference<WeaponProfile> | null {
+  // Get the user's weapon profiles collection reference
+  private getUserWeaponsCollection(): CollectionReference<Weapon> | null {
     const user = this.auth.currentUser;
     if (!user) {
       console.error('No user is logged in.');
       return null;
     }
-    return collection(this.firestore, `users/${user.uid}/weapons`) as CollectionReference<WeaponProfile>;
+    return collection(this.firestore, `users/${user.uid}/weapon-profiles`) as CollectionReference<Weapon>;
   }
 
   // Create or update a weapon
-  async saveWeapon(weaponName: string, weapon: WeaponProfile): Promise<void> {
+  async saveWeapon(weaponName: string, weapon: Weapon): Promise<void> {
     const weaponsCollection = this.getUserWeaponsCollection();
     if (!weaponsCollection) {
       throw new Error('Cannot save weapon: No user is logged in.');
     }
     const sanitizedWeaponName = this.sanitizeName(weaponName);
-    const weaponDoc: DocumentReference<WeaponProfile> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<WeaponProfile>;
+    const weaponDoc: DocumentReference<Weapon> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<Weapon>;
     await setDoc(weaponDoc, weapon);
   }
 
   // Get a specific weapon by name
-  getWeapon(weaponName: string): Observable<WeaponProfile | null> {
+  getWeapon(weaponName: string): Observable<Weapon | null> {
     const weaponsCollection = this.getUserWeaponsCollection();
     if (!weaponsCollection) {
       console.error('Cannot fetch weapon: No user is logged in.');
       return of(null);
     }
     const sanitizedWeaponName = this.sanitizeName(weaponName);
-    const weaponDocRef: DocumentReference<WeaponProfile> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<WeaponProfile>;
+    const weaponDocRef: DocumentReference<Weapon> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<Weapon>;
     return docData(weaponDocRef).pipe(
       map((data) => data ?? null), // Map undefined to null
       catchError((err) => {
@@ -68,7 +68,7 @@ export class WeaponsService {
   }
 
   // Get all weapons for the logged-in user
-  getAllWeapons(): Observable<WeaponProfile[]> {
+  getAllWeapons(): Observable<Weapon[]> {
     const weaponsCollection = this.getUserWeaponsCollection();
     if (!weaponsCollection) {
       throw new Error('Cannot fetch weapons: No user is logged in.');
@@ -82,7 +82,7 @@ export class WeaponsService {
   }
 
   // Get multiple weapons by their names
-  getWeaponsByNames(weaponNames: string[]): Observable<WeaponProfile[]> {
+  getWeaponsByNames(weaponNames: string[]): Observable<Weapon[]> {
     const weaponsCollection = this.getUserWeaponsCollection();
     if (!weaponsCollection) {
       console.error('Cannot fetch weapons: No user is logged in.');
@@ -92,7 +92,7 @@ export class WeaponsService {
     // Create an array of observables for each weapon name
     const weaponObservables = weaponNames.map(weaponName => {
       const sanitizedWeaponName = this.sanitizeName(weaponName);
-      const weaponDocRef: DocumentReference<WeaponProfile> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<WeaponProfile>;
+      const weaponDocRef: DocumentReference<Weapon> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<Weapon>;
       return docData(weaponDocRef).pipe(
         catchError(err => {
           console.error(`Error fetching weapon ${sanitizedWeaponName}:`, err);
@@ -105,7 +105,7 @@ export class WeaponsService {
     return combineLatest(weaponObservables).pipe(
       map(weapons => {
         // Filter out null and undefined values
-        const validWeapons = weapons.filter((weapon): weapon is WeaponProfile => weapon != null);
+        const validWeapons = weapons.filter((weapon): weapon is Weapon => weapon != null);
         return validWeapons;
       }),
       catchError(err => {
@@ -122,7 +122,7 @@ export class WeaponsService {
       throw new Error('Cannot delete weapon: No user is logged in.');
     }
     const sanitizedWeaponName = this.sanitizeName(weaponName);
-    const weaponDocRef: DocumentReference<WeaponProfile> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<WeaponProfile>;
+    const weaponDocRef: DocumentReference<Weapon> = doc(weaponsCollection, sanitizedWeaponName) as DocumentReference<Weapon>;
     await deleteDoc(weaponDocRef);
   }
 }
