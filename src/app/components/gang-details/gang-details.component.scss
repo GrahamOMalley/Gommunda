@@ -110,7 +110,34 @@ td {
 /* Specific styles for the rule table */
 .rule-table th:first-child,
 .rule-table td:first-child {
-  width: 30%; /* Fixed percentage width for the Name column */
+  width: 20%; /* Fixed percentage width for the Name column */
+}
+
+.rule-card {
+  margin: 8px 0; /* Add spacing between cards */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+.rule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.rule-table th,
+.rule-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.rule-table th {
+  font-weight: bold;
+}
+
+.rule-table td {
+  vertical-align: middle;
 }
 
 .viewport-width {
