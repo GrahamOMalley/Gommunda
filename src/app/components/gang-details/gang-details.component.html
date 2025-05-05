@@ -3,12 +3,13 @@
   <p>Loading gang details...</p>
 </ng-template>
 
-<div style="display: flex; justify-content: space-between; align-items: center;" *ngIf="gang$ | async as gang; else loading">
-	<h2>{{ gang.gang_name }}</h2>
-	<mat-slide-toggle [(ngModel)]="showGangerImages">Show Ganger Images</mat-slide-toggle>
-</div>
 
 <div class="gang-details-container" *ngIf="gang$ | async as gang; else loading">
+
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>{{ gang.gang_name }}</h2>
+    <mat-slide-toggle [(ngModel)]="showGangerImages">Show Ganger Images</mat-slide-toggle>
+  </div>
 
   <img *ngIf="gang.gang_image && showGangerImages" [src]="gang.gang_image" alt="{{ gang.gang_name }}" class="gang-image" />
 

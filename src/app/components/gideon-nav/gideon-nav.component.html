@@ -7,12 +7,14 @@
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
 
-  <span>Gommunda - beta build</span>
+  <span class="viewport-width">Gommunda - build #  - Width: {{ viewportWidth }}px</span>
 
   <span class="spacer"></span>
 
+  <!-- Display the viewport width -->
+
   <div *ngIf="(user$ | async) as user" class="user-info">
-    <span>{{ user.displayName }}</span>
+    <!-- <span>{{ user.displayName }}</span> -->
     <img [src]="user.photoURL" alt="User Photo" class="user-photo" />
     <button mat-button color="warn" (click)="logout()">
       <mat-icon>logout</mat-icon>

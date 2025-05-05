@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,7 +17,7 @@ import { Gang, GangService } from '../../services/gang.service';
 @Component({
   selector: 'app-gideon-nav',
   templateUrl: './gideon-nav.component.html',
-  styleUrl: './gideon-nav.component.scss',
+  styleUrls: ['./gideon-nav.component.scss'],
   standalone: true,
   imports: [
     MatToolbarModule,
@@ -28,12 +28,14 @@ import { Gang, GangService } from '../../services/gang.service';
     MatIconModule,
     AsyncPipe,
     CommonModule,
-    RouterOutlet, RouterModule
-  ]
+    RouterOutlet,
+    RouterModule,
+  ],
 })
 export class GideonNavComponent {
   user$: Observable<User | null>;
   gangs$: Observable<Gang[] | null>;
+  viewportWidth: number = window.innerWidth; // Initialize with the current width
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -60,6 +62,11 @@ export class GideonNavComponent {
         }
       })
     );
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.viewportWidth = document.documentElement.clientWidth; // Exclude scrollbar width
   }
 
   logout(): void {

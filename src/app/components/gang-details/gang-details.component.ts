@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GangService } from '../../services/gang.service';
 import { WeaponsService } from '../../services/weapons.service';
@@ -47,6 +47,7 @@ export class GangDetailsComponent implements OnInit, OnDestroy {
     weapon_trait: 'Weapon Traits',
     equipment: 'Equipment'
   };
+  viewportWidth: number = window.innerWidth; // Initialize with the current width
 
 
   constructor(
@@ -76,6 +77,14 @@ export class GangDetailsComponent implements OnInit, OnDestroy {
       this.routeSub.unsubscribe();
     }
   }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.viewportWidth = document.documentElement.clientWidth; // Exclude scrollbar width
+  }
+
+  
   // Get equipment list (placeholder implementation)
   getEquipmentList(ganger: any): string {
     return ganger.equipment.map((item: any) => item.name).join(', ');
