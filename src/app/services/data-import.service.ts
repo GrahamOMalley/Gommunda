@@ -154,9 +154,14 @@ export class DataImportService {
     return forkJoin([
       this.createMissingRules(uniqueSkills, equipment),
       this.createMissingWeapons(weapons),
-      this.createMissingGangerSpecialRules(importedGang.gangers), // Add this call
+      this.createMissingGangerSpecialRules(importedGang.gangers),
     ]).pipe(
-      map(() => importedGang) // Pass the gang to the next step
+      switchMap(() => this.saveGang(importedGang)), // Save the gang after processing
+      map(() => importedGang), // Pass the gang to the next step
+      catchError((err) => {
+        console.error('Error processing gang data:', err);
+        throw err;
+      })
     );
   }
 
