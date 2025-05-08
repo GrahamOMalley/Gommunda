@@ -39,15 +39,47 @@ export class AuthService {
 
       // Save user to Firestore
       const userRef = doc(this.firestore, `users/${user.uid}`);
-      await setDoc(userRef, {
-        uid: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        lastLogin: new Date().toISOString(),
-      }, { merge: true }); // Use merge to avoid overwriting existing data
+      await setDoc(
+        userRef,
+        {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          lastLogin: new Date().toISOString(),
+        },
+        { merge: true } // Use merge to avoid overwriting existing data
+      );
     } catch (error) {
       console.error('Google-Login error:', error);
+      throw error;
+    }
+  }
+
+  async loginWithEmailAndPassword(email: string, password: string): Promise<void> {
+    try {
+      const result = await signInWithEmailAndPassword(this.firebaseAuth, email, password);
+      console.log('Email-Login result:', result);
+      const user = result.user;
+      if (!user) {
+        throw new Error('Email-Login error');
+      }
+
+      // Save user to Firestore
+      const userRef = doc(this.firestore, `users/${user.uid}`);
+      await setDoc(
+        userRef,
+        {
+          uid: user.uid,
+          displayName: user.displayName || 'Anonymous',
+          email: user.email,
+          photoURL: user.photoURL || null,
+          lastLogin: new Date().toISOString(),
+        },
+        { merge: true } // Use merge to avoid overwriting existing data
+      );
+    } catch (error) {
+      console.error('Email-Login error:', error);
       throw error;
     }
   }
