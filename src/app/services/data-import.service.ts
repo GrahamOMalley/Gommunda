@@ -210,6 +210,9 @@ export class DataImportService {
       "pike",
       "missile",
       "launcher",
+      "fist",
+      "saw",
+      "bolt"
     ];
     const weapons = new Set<string>();
     const equipment = new Set<string>();
